@@ -23,7 +23,7 @@
 
 // console.log(hamburger.ingredients[0]); // Salad
 // console.log(secondBurger.ingredients[0]); // Salad
-//Quanti oggetti sono stati creati in memoria durante l'esecuzione di questo codice? Solo uno.
+//Quanti oggetti sono stati creati in memoria durante l'esecuzione di questo codice? 3.
 
 /* Snack 3*/
 // const hamburger = {
@@ -41,7 +41,7 @@
 // };
 // const secondBurger = structuredClone(hamburger);
 // const thirdBurger = structuredClone(hamburger);
-//Quanti oggetti sono stati creati in memoria durante l'esecuzione di questo codice? 3.
+//Quanti oggetti sono stati creati in memoria durante l'esecuzione di questo codice? 9.
 
 
 /* Snack 4*/
@@ -102,7 +102,7 @@
 // console.log(secondBurger.maker.restaurant.name); // Hyur's II
 
 //Senza lanciare il codice, riesci a prevedere cosa viene stampato in console? Quanti oggetti sono stati creati in memoria durante l'esecuzione di questo codice?
-// hamburger, newRestaurant e secondBurger. Sono 3 gli oggetti creati in memoria.
+//Sono 5 gli oggetti creati in memoria.
 
 
 /* Snack 6*/
@@ -128,7 +128,11 @@ const chef = {
     }
 }
 
-const secondChef = {...chef};
+const secondChef = {...chef,
+    restaurant: {...chef.restaurant,
+        address: {...chef.restaurant.address}
+    }
+};
 console.log(chef);
 console.log(secondChef);
 
@@ -152,10 +156,15 @@ function cloneObj(obj) {
 
     const clonedObj = {};
     for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            clonedObj[key] = cloneObj(obj[key]); 
+        const value = obj[key];
+        if(typeof value !== 'object'){
+            clonedObj[key] = value;
+        }else{
+            cloneObj(value);
         }
     }
     console.log(clonedObj);
     return clonedObj;
 }
+
+
